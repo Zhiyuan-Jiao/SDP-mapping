@@ -35,9 +35,19 @@
                 <p id="description">(Click one of the locations for more information!) <br> This map records the locations in Svoboda's Diaries. The diaries capture over 40 years of trade on the Tigris, life, politics, and the landscape of Ottoman Iraq through the perspective of Joseph Svoboda as a British steamship purser with a rich family history and local connections.</p>
             </div>
             <div id="footer">
-                <p id="acknowlegdement">
-                    This project is a subproject under <b>Svoboda Diaries Project</b>. If you want to learn more about the main project and look at the original diaries, check out the <a href="https://www.svobodadiariesproject.org">project website</a>.
-                </p>
+                <div id="howToUse" class="card">
+                    <h3 id="Usage" class="footerHeader">How to use:</h3>
+                    <p class="footerContent">Hover over an icon to see the current location and click to learn more.</p>
+                    <img src="images/diagram.png" alt="use instructions" width="300px" style="margin-left: 60px;" class="footerContent">
+                </div>
+                <div id="toggleMapView" class="card">
+                    <h3 id="toggleView" class="footerHeader">Toggle Map View</h3>
+                    <p class="footerContent">Click <img src="images/toggle on directiosn.png" alt="toggle button" width="45px"> button to toggle on/off the historical map.</p>
+                </div>
+                <div id="accessKeyWords">
+                    <h3 id="keyWords" class="footerHeader">Access Key Words</h3>
+                    <p class="footerContent">Click <img src="images/book-opened.png" alt="key words" width="25px"> button on to view current translations commonly used words in the diaries.</p>
+                </div>
             </div>
         </div>
         <!-- main window/map -->
@@ -58,23 +68,23 @@
         <script src="js/c3.min.js"></script>
         <script src="js/jquery.min.js"></script>
         <script>
+
         var highlightLayer;
         function highlightFeature(e) {
             highlightLayer = e.target;
 
-            if (e.target.feature.geometry.type === 'LineString') {
-              highlightLayer.setStyle({
-                color: '#ffff00',
-              });
-            } else {
-              highlightLayer.setStyle({
-                fillColor: '#ffff00',
+            highlightLayer.setStyle({
+                fillColor: '#fcba03',
                 fillOpacity: 1
-              });
-            }
+            });
         }
+
+        function resetFeature() {
+            layer_Locations.setStyle(style_Locations_3_0)
+        }
+
         var map = L.map('map', {
-            zoomControl:true, maxZoom:22, minZoom:5
+            zoomControl:true, maxZoom:11, minZoom:7
         }).fitBounds([[29.642671989027207,41.825057647292226],[35.343067849258446,51.85570280494848]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a> &middot; <a href="https://d3js.org">D3</a>');
@@ -82,37 +92,50 @@
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
+
         map.createPane('pane_GoogleRoad_0');
         map.getPane('pane_GoogleRoad_0').style.zIndex = 400;
         var layer_GoogleRoad_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
             pane: 'pane_GoogleRoad_0',
             opacity: 1.0,
             attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Base Map ©2015 Google</a>',
-            minZoom: 5,
-            maxZoom: 15,
-            minNativeZoom: 0,
-            maxNativeZoom: 20
+            minZoom: 7,
+            maxZoom: 11,
+            minNativeZoom: 7,
+            maxNativeZoom: 11
         });
         layer_GoogleRoad_0;
         map.addLayer(layer_GoogleRoad_0);
-        map.createPane('pane_basemap2_m3_1');
-        map.getPane('pane_basemap2_m3_1').style.zIndex = 401;
-        var img_basemap2_m3_1 = 'data/basemap2_m3_1.png';
-        var img_bounds_basemap2_m3_1 = [[30.052173598820133,45.2177239675953],[32.312877554733824,48.58791186494971]];
-        var layer_basemap2_m3_1 = new L.imageOverlay(img_basemap2_m3_1,
-                                              img_bounds_basemap2_m3_1,
-                                              {pane: 'pane_basemap2_m3_1'});
-        bounds_group.addLayer(layer_basemap2_m3_1);
-        map.addLayer(layer_basemap2_m3_1);
-        map.createPane('pane_basemap1_m4_2');
-        map.getPane('pane_basemap1_m4_2').style.zIndex = 402;
-        var img_basemap1_m4_2 = 'data/basemap1_m4_2.png';
-        var img_bounds_basemap1_m4_2 = [[31.52291766294977,43.28236519415157],[34.12778558144674,47.275883812638504]];
-        var layer_basemap1_m4_2 = new L.imageOverlay(img_basemap1_m4_2,
-                                              img_bounds_basemap1_m4_2,
-                                              {pane: 'pane_basemap1_m4_2'});
-        bounds_group.addLayer(layer_basemap1_m4_2);
-        map.addLayer(layer_basemap1_m4_2);
+
+        // map.createPane('pane_basemap2_m3_1');
+        // map.getPane('pane_basemap2_m3_1').style.zIndex = 401;
+        // var img_basemap2_m3_1 = 'data/basemap2_m3_1.png';
+        // var img_bounds_basemap2_m3_1 = [[30.052173598820133,45.2177239675953],[32.312877554733824,48.58791186494971]];
+        // var layer_basemap2_m3_1 = new L.imageOverlay(img_basemap2_m3_1,
+        //                                       img_bounds_basemap2_m3_1,
+        //                                       {pane: 'pane_basemap2_m3_1'});
+        // bounds_group.addLayer(layer_basemap2_m3_1);
+        // map.addLayer(layer_basemap2_m3_1);
+
+        // map.createPane('pane_basemap1_m4_2');
+        // map.getPane('pane_basemap1_m4_2').style.zIndex = 402;
+        // var img_basemap1_m4_2 = 'data/basemap1_m4_2.png';
+        // var img_bounds_basemap1_m4_2 = [[31.52291766294977,43.28236519415157],[34.12778558144674,47.275883812638504]];
+        // var layer_basemap1_m4_2 = new L.imageOverlay(img_basemap1_m4_2,
+        //                                       img_bounds_basemap1_m4_2,
+        //                                       {pane: 'pane_basemap1_m4_2'});
+        // bounds_group.addLayer(layer_basemap1_m4_2);
+        // map.addLayer(layer_basemap1_m4_2);
+
+        map.createPane('pane_historical_map');
+        map.getPane('pane_historical_map').style.zIndex = 402;
+        var img_historical_map = 'data/HistoricalMap.png';
+        var img_bounds_historical_map = [[33.947523, 43.952899],[29.077112, 49.019982]];
+        var layer_historical_map = new L.imageOverlay(img_historical_map,
+                                              img_bounds_historical_map,
+                                              {pane: 'pane_historical_map'});
+        bounds_group.addLayer(layer_historical_map);
+        map.addLayer(layer_historical_map);
         
         // Added
         var layer_locations = null,
@@ -122,7 +145,7 @@
         // 6. Map relevant operations
         // 6.1 create a location layer
             layer_locations = L.geoJSON(datasets[0], {
-                attribution: '| <a href="https://www.svobodadiariesproject.org" target="_blank">Location Data & Scanned Maps ©Svoboda Diaries Project</a> | Made By Linli Shi',
+                attribution: '| <a href="https://www.svobodadiariesproject.org" target="_blank">Location Data & Scanned Maps ©Svoboda Diaries Project</a> | Made By Linli Shi & Zhiyuan',
                 onEachFeature: locations_events,
                 pointToLayer: function (feature, latlng) {
                     var context = {
@@ -137,8 +160,10 @@
 
         function locations_events(feature, layer) {
             layer.on({
-            // mouseover: highlightFeature1,
+            // click: highlightFeature,
             click: clickFeature,
+            mouseover: hoveropenFeature,
+            mouseout: hovercloseFeature,
             // mouseout: resetHighlight
             });
         }
@@ -148,8 +173,32 @@
             $("#placename").text(e.target.feature.properties.Name);
             $("#description").text(e.target.feature.properties.Desc);
             $("#alt_name").text("In the diaries: " + e.target.feature.properties.Diaries);
-
+            // resetFeature();
+            highlightFeature(e)
         }
+
+        var popup = L.popup();
+
+        function hoveropenFeature(e) {
+            popup
+                .setLatLng(e.latlng)
+                .setContent(e.target.feature.properties.Name)
+                .openOn(map)
+        }
+        
+        function hovercloseFeature(e) {
+            map
+                .closePopup()
+        }
+
+        // function onMapLoc(e) {
+        //     popup
+        //         .setLatLng(e.latlng)
+        //         .setContent("You clicked the map at " + e.latlng.toString())
+        //         .openOn(map);
+        // }
+
+        // map.on('click', onMapLoc);
         
         // 6.6 bind the onMapClick function to the mymap object.
         map.on('click', onMapClick);
@@ -159,34 +208,6 @@
             $("#description").text("This map records the locations in Svoboda's Diaries. The diaries capture over 40 years of trade on the Tigris, life, politics, and the landscape of Ottoman Iraq through the perspective of Joseph Svoboda as a British steamship purser with a rich family history and local connections.");
             $("#alt_name").text("In the diaries: Ottoman Empire")
         }
-
-        function pop_Locations_3(feature, layer) {
-            layer.on({
-                mouseout: function(e) {
-                    for (i in e.target._eventParents) {
-                        e.target._eventParents[i].resetStyle(e.target);
-                    }
-                },
-                // click: clickFeature,
-                mouseover: highlightFeature,
-            });
-            var popupContent = '<table>\
-                    <tr>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>Name</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>Current</strong><br />' + (feature.properties['Current'] !== null ? autolinker.link(feature.properties['Current'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>In diary</strong><br />' + (feature.properties['In diary'] !== null ? autolinker.link(feature.properties['In diary'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
-
 
         function style_Locations_3_0() {
             return {
@@ -214,7 +235,6 @@
             dataVar: 'json_Locations_3',
             layerName: 'layer_Locations_3',
             pane: 'pane_Locations_3',
-            onEachFeature: pop_Locations_3,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,

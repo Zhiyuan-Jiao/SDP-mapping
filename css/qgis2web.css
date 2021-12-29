@@ -2,19 +2,17 @@
         #info {
             z-index: 1000;
             position: absolute;
-            width: 370px;
-            top: 1%;
-            bottom: 1%;
-            left: .5%;
-            padding: 40px 15px 800px 15px;
-            background: #3c434b;
-            color: white;
-          
+            width: 28%;
+            height: 100%;
+            padding: 0 15px;
+            background: #332C1C;
+            color: #FAEEDE;
+            font-family: "PT Serif";
         }
 
         #title {
             font-size: 20px;
-            font-family: 'Georgia', sans-serif;
+            font-weight: normal;
         }
 
         #title span {
@@ -25,42 +23,46 @@
           
 
         #placename {
-            font-size: 22px;
-            font-family: 'Georgia', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
         }
 
         #alt_name {
-            font-size: 18px;
-            font-family: 'Georgia', sans-serif;
-            color:#8fc1d4
+            font-size: 16px;
+            color:#8fc1d4;
         }
 
         #desc {
             text-align: left;
             color: lightgray;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            font-family: 'Trebuchet MS', sans-serif;
         }
 
         #description {
             margin:0;
             text-align: left;
             color: lightgray;
-            font-size: 17px;
-            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 16px;
         }  
 
         #footer {
-            margin-top: 130px;
-            margin-right: 25px;
-            font-size: 15px;
-            line-height: 150%;
-            padding: 30px 15px 16px 15px;
+            font-size: 16px;
+            /* line-height: 150%; */
+            /* padding: 15px; */
             position: absolute;
-            top: 60%;
+            bottom: 0;
             color: lightgray;
-            background: #47528f;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+
+        .footerHeader {
+            margin-bottom: 0;
+        }
+
+        .footerContent {
+            margin-top: 0;
         }
 
         /* #acknowlegdement {
@@ -84,6 +86,9 @@
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border-radius: 5px;
         }
+
+       
+
         .info h2 {
             margin: 0 0 5px;
             color: #777;
